@@ -1,7 +1,7 @@
 <template>
   <div class="color-game-page ">
      <h1>{{title}}</h1>
-     {{ score}}
+     {{score}}
      <div class="group">
       <router-link to="/game" tag="button" class="button">Replay</router-link>
       <router-link to="/" tag="button" class="button">Menu</router-link>
@@ -19,9 +19,10 @@ export default {
     return { title: 'Finish!' }
   },
   methods: {
-    score() {
+    score: function() {
       let auxArray = JSON.parse(localStorage.getItem('scoreHistory'))
-      return auxArray ? auxArray[auxArray.length - 1] : 0
+      let value = auxArray ? auxArray[auxArray.length - 1] : 0
+      return value
     }
   },
   components: { 'game-stats': GameStats }
