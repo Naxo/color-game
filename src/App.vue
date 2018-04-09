@@ -85,6 +85,7 @@ h2 {
   text-decoration: none;
   min-width: 50%;
   margin: 0.5rem 0.5rem;
+  border: 0;
 }
 
 .button:hover {

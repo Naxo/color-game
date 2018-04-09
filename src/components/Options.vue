@@ -1,7 +1,6 @@
 <template>
   <div class="color-game-page ">
-
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
     <div class="group">
       <router-link to="/game" tag="button" class="button">Play</router-link>
       <router-link to="/botgame" tag="button" class="button">Bot solution</router-link>
@@ -12,19 +11,14 @@
 </template>
 
 <script>
-import router from 'vue-router'
-
 export default {
   name: 'Options',
   data: () => {
     return {
-      msg: 'Color Game'
+      title: 'Color Game'
     }
   },
   methods: {
-    goToGame: () => {
-      router.push('game')
-    },
     resetStorage: () => {
       localStorage.clear()
     }
@@ -34,5 +28,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(yellow, darkorange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 </style>

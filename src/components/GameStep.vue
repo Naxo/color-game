@@ -1,18 +1,18 @@
 <template>
   <div v-if="colors.length > 0" class="color-game-page ">
-    <h1 v-bind:style="{ color: colors[0].hex}">{{ initialColors[getRandom].title }}</h1>
+    <h1 v-bind:style="{ color: colors[0].hex}">{{ initialColors[randomValue].title }}</h1>
     <div class="group">
       <progress :value="time" max="2800"></progress>
-      <div v-if="lt">
+        <div v-if="lt">
         <button class="game-button" v-bind:style="{ 'border-color': colors[1].hex}" v-on:click="pushColor(colors[0].title)">
           {{colors[0].title}}</button>
         <button class="game-button" v-bind:style="{ 'border-color': colors[2].hex}" v-on:click="pushColor(colors[1].title)">
           {{colors[1].title}}</button>
       </div>
       <div v-if="!lt">
-        <button class="game-button" v-bind:style="{ 'border-color': colors[2].hex}" v-on:click="pushColor(colors[1].title)">
-          {{colors[1].title}}</button>
-        <button class="game-button" v-bind:style="{ 'border-color': colors[1].hex}" v-on:click="pushColor(colors[0].title)">
+        <button class="game-button" v-bind:style="{ 'border-color': colors[1].hex}" v-on:click="pushColor(colors[1].title)">
+          {{colors[2].title}}</button>
+        <button class="game-button" v-bind:style="{ 'border-color': colors[2].hex}" v-on:click="pushColor(colors[0].title)">
            {{colors[0].title}}</button>
       </div>
     </div>
@@ -20,17 +20,15 @@
 </template>
 
 <script>
-let count = 0
-let interval = 0
-
 export default {
   name: 'Game',
   mounted() {
     let self = this
-    interval = window.setInterval(function() {
+    self.interval = window.setInterval(function() {
       if (self.time > 0) {
         self.time = self.time - 100
       } else {
+        self.score.push(0)
         self.reInit()
       }
     }, 100)
@@ -41,7 +39,10 @@ export default {
       time: 2800,
       colors: [],
       lt: true,
-      score: 0,
+      score: [],
+      interval: 0,
+      randomValue: 0,
+      counter: 0,
       initialColors: [
         { title: 'Red', hex: 'red' },
         { title: 'Blue', hex: 'blue' },
@@ -55,7 +56,8 @@ export default {
   methods: {
     pushColor(color) {
       if (this.colors[0].title === color) {
-        this.score++
+        let score = +parseFloat(10 * this.time / 2800).toFixed(2)
+        this.score.push(score)
       }
       this.reInit()
     },
@@ -67,7 +69,7 @@ export default {
       return array
     },
     reInit() {
-      if (count >= 10) {
+      if (this.counter >= 10) {
         let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory'))
 
         if (
@@ -78,9 +80,14 @@ export default {
           scoreHistory = []
         }
 
+        let finalScore =
+          this.score.length > 0
+            ? this.score.reduce((b, a) => b + a) / this.score.length
+            : 0
+
         scoreHistory[
           scoreHistory.length > 0 ? scoreHistory.length : 0
-        ] = this.score
+        ] = finalScore
 
         localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory))
         this.$router.push('/finishgame')
@@ -88,19 +95,18 @@ export default {
       this.time = 2800
       this.lt = Math.floor(Math.random() * 2 + 1) === 1
       this.colors = this.shuffle(this.initialColors).slice(0, 3)
-      count++
-    }
-  },
-  computed: {
-    getRandom() {
+      this.counter++
+      this.randomValue = this.random()
+    },
+    random() {
       var num = Math.floor(Math.random() * 6)
-      return num === 0 ? this.getRandom() : num
+      return num === 0 ? this.random() : num
     }
   },
   beforeDestroy() {
     this.time = 2800
-    count = 0
-    window.clearInterval(interval)
+    this.counter = 0
+    window.clearInterval(this.interval)
   }
 }
 </script>

@@ -18,7 +18,7 @@ export default {
   data: () => {
     return { title: 'Finish!' }
   },
-  methods: {
+  computed: {
     score: function() {
       let auxArray = JSON.parse(localStorage.getItem('scoreHistory'))
       let value = auxArray ? auxArray[auxArray.length - 1] : 0
@@ -28,8 +28,3 @@ export default {
   components: { 'game-stats': GameStats }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>

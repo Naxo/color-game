@@ -53,16 +53,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+p {
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
+  padding-bottom: 2rem;
+}
 input[type='range'] {
   -webkit-appearance: none;
-  width: 70%;
+  width: 50%;
   margin: 18.3px 0;
 }
 input[type='range']:focus {
   outline: none;
 }
 input[type='range']::-webkit-slider-runnable-track {
-  width: 70%;
+  width: 50%;
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -85,7 +91,7 @@ input[type='range']:focus::-webkit-slider-runnable-track {
   background: #367ebd;
 }
 input[type='range']::-moz-range-track {
-  width: 70%;
+  width: 50%;
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -103,7 +109,7 @@ input[type='range']::-moz-range-thumb {
   cursor: pointer;
 }
 input[type='range']::-ms-track {
-  width: 70%;
+  width: 50%;
   height: 8.4px;
   cursor: pointer;
   background: transparent;
