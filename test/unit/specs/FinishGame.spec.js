@@ -24,15 +24,14 @@ const router = new VueRouter({
 const Constructor = Vue.extend(FinishGame)
 const vm = new Constructor({ router }).$mount()
 
-beforeEach(function () {
-  window.localStorage.setItem('scoreHistory', JSON.stringify([2, 4, 2, 10, 6]))
-})
-
 describe('FinishGame.vue', () => {
-  it('should render correct title', done => {
+  it('should render correct title and stats', done => {
     router.push('finishgame')
+    localStorage.clear()
+    localStorage.setItem('scoreHistory', JSON.stringify([20, 40, 20, 100, 60]))
     Vue.nextTick(() => {
       expect(vm.$el.querySelector('h1').textContent).to.equal('Finish!')
+      expect(vm.score).to.equal(60)
       done()
     })
   })

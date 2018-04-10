@@ -1,7 +1,7 @@
 <template>
   <div class="color-game-page">
      <h1>{{title}}</h1>
-     {{score}}
+     {{score}}%
      <div class="group">
       <router-link to="/game" tag="button" class="button">Replay</router-link>
       <router-link to="/" tag="button" class="button">Menu</router-link>

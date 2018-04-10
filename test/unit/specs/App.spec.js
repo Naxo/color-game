@@ -5,6 +5,7 @@ import FinishGame from '@/components/FinishGame'
 import GameContainer from '@/components/GameContainer'
 import GameContainerRobot from '@/components/GameContainerRobot'
 import Options from '@/components/Options'
+import Settings from '@/components/Settings'
 
 Vue.use(VueRouter)
 const myRoutes = [
@@ -19,6 +20,10 @@ const myRoutes = [
   {
     path: '/botgame',
     component: GameContainerRobot
+  },
+  {
+    path: '/settings',
+    component: Settings
   },
   {
     path: '/finishgame',
@@ -66,6 +71,22 @@ describe('App.vue', () => {
     try {
       Vue.nextTick(() => {
         expect(vm.$el.querySelectorAll('input[type=range]').length).to.equal(1)
+        done()
+      })
+    } catch (error) {
+      done()
+    }
+  })
+  it('should render correct title to settings', done => {
+    const Constructor = Vue.extend(App)
+    const router = new VueRouter({
+      routes: myRoutes
+    })
+    const vm = new Constructor({ router }).$mount()
+    router.push('/settings')
+    try {
+      Vue.nextTick(() => {
+        expect(vm.$el.querySelector('h1').textContent).to.equal('Settings')
         done()
       })
     } catch (error) {

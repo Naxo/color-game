@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import FinishGame from '@/components/FinishGame'
 import GameContainer from '@/components/GameContainer'
 import Options from '@/components/Options'
 
@@ -19,10 +18,6 @@ const router = new VueRouter({
 })
 const Constructor = Vue.extend(Options)
 const vm = new Constructor({ router }).$mount()
-
-beforeEach(function () {
-  window.localStorage.setItem('scoreHistory', JSON.stringify([2, 4, 2, 10, 6]))
-})
 
 describe('Options.vue', () => {
   it('should render correct title', done => {

@@ -1,8 +1,8 @@
 <template>
   <div v-if="colors.length > 0" class="color-game-page">
-    <h1 v-bind:style="{ color: colors[0].hex}">{{ initialColors[randomValue].title }}</h1>
+    <h1 v-bind:style="{ color: colors[0].hex}">{{ setup.range[randomValue].title }}</h1>
     <div class="group">
-      <progress :value="time" max="2800"></progress>
+      <progress :value="time" :max="setup.time"></progress>
         <div v-if="lt">
         <button class="game-button" v-bind:style="{ 'border-color': colors[1].hex}" v-on:click="pushColor(colors[0].title)">
           {{colors[0].title}}</button>
@@ -23,6 +23,8 @@
 export default {
   name: 'Game',
   mounted() {
+    let level = localStorage.getItem('levelSelected')
+    if (level) this.level = level
     let self = this
     self.interval = window.setInterval(function() {
       if (self.time > 0) {
@@ -43,20 +45,14 @@ export default {
       interval: 0,
       randomValue: 0,
       counter: 0,
-      initialColors: [
-        { title: 'Red', hex: 'red' },
-        { title: 'Blue', hex: 'blue' },
-        { title: 'Green', hex: 'green' },
-        { title: 'Grey', hex: 'grey' },
-        { title: 'Yellow', hex: 'darkyellow' },
-        { title: 'Orange', hex: 'orange' }
-      ]
+      level: 'medium',
+      setup: {}
     }
   },
   methods: {
     pushColor(color) {
       if (this.colors[0].title === color) {
-        let score = +parseFloat(10 * this.time / 2800).toFixed(2)
+        let score = Math.round(10 * this.time / 2800) * 10
         this.score.push(score)
       }
       this.reInit()
@@ -92,14 +88,50 @@ export default {
         localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory))
         this.$router.push('/finishgame')
       }
-      this.time = 2800
       this.lt = Math.floor(Math.random() * 2 + 1) === 1
-      this.colors = this.shuffle(this.initialColors).slice(0, 3)
+      this.setup = this.getSetup(this.level)
+      this.time = this.setup.time
+      this.colors = this.shuffle(this.setup.range).slice(0, 3)
       this.counter++
       this.randomValue = this.random()
     },
+    getSetup(level) {
+      let colors = [
+        { title: 'Red', hex: 'red' },
+        { title: 'Blue', hex: 'blue' },
+        { title: 'Green', hex: 'green' },
+        { title: 'Grey', hex: 'grey' },
+        { title: 'Orange', hex: 'orange' },
+        { title: 'Yellow', hex: 'yellow' },
+        { title: 'Purple', hex: 'purple ' },
+        { title: 'Pink', hex: 'pink' },
+        { title: 'Cyan', hex: 'cyan' },
+        { title: 'Brown', hex: 'brown' },
+        { title: 'Olive', hex: 'olive' },
+        { title: 'Lime', hex: 'lime' },
+        { title: 'Khaki', hex: 'khaki' },
+        { title: 'Coral', hex: 'Coral' },
+        { title: 'Tomato', hex: 'tomato' }
+      ]
+      let setup
+      switch (level) {
+        case 'easy':
+          setup = { range: colors.slice(0, 5), time: 3200 }
+          break
+        case 'medium':
+          setup = { range: colors.slice(0, 10), time: 2800 }
+          break
+        case 'hard':
+          setup = { range: colors, time: 2200 }
+          break
+        default:
+          setup = { range: colors.slice(0, 10), time: 2800 }
+          break
+      }
+      return setup
+    },
     random() {
-      var num = Math.floor(Math.random() * 6)
+      var num = Math.floor(Math.random() * this.setup.range.length)
       return num === 0 ? this.random() : num
     }
   },

@@ -2,9 +2,11 @@
   <div class="color-game-page ">
       <transition name="fade">
         <div v-if="!delaySelected">
-          <p>You can select the delay that the robot will resolve the game. The range is delimited from 0 to 2.8 seconds</p>
-          <input type="range" min="0" max="2800" step="100" v-model="delay">
-          <button class="button" v-on:click="next">Next</button>
+          <div class="group">
+            <p>You can select the delay that the robot will resolve the game. The range is delimited from 0 to 2.8 seconds</p>
+            <input type="range" min="0" :max="getTimeLevel" step="100" v-model="delay">
+            <button class="button" v-on:click="next">Next</button>
+          </div>
         </div>
         <div v-if="delaySelected">
           <game-step></game-step>
@@ -43,6 +45,29 @@ export default {
           })
         })
       }, self.delay)
+    }
+  },
+  computed: {
+    getTimeLevel() {
+      let level = localStorage.getItem('levelSelected')
+      let time = 2800
+      if (level) {
+        switch (level) {
+          case 'easy':
+            time = 3200
+            break
+          case 'medium':
+            time = 2800
+            break
+          case 'hard':
+            time = 2200
+            break
+          default:
+            time = 2800
+            break
+        }
+      }
+      return time
     }
   },
   beforeDestroy() {
