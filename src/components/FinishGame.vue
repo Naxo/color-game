@@ -1,5 +1,5 @@
 <template>
-  <div class="color-game-page ">
+  <div class="color-game-page">
      <h1>{{title}}</h1>
      {{score}}
      <div class="group">

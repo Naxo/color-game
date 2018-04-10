@@ -1,5 +1,5 @@
 <template>
-  <div class="color-game-page ">
+  <div class="color-game-page">
     <h1>{{ title }}</h1>
     <div class="group">
       <router-link to="/game" tag="button" class="button">Play</router-link>
@@ -20,14 +20,14 @@ export default {
   },
   methods: {
     resetStorage: () => {
-      localStorage.clear()
+      localStorage.setItem('scoreHistory', JSON.stringify([]))
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style scoped>
 h1 {
   font-size: 72px;
   background: -webkit-linear-gradient(yellow, darkorange);

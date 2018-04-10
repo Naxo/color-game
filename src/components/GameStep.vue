@@ -1,5 +1,5 @@
 <template>
-  <div v-if="colors.length > 0" class="color-game-page ">
+  <div v-if="colors.length > 0" class="color-game-page">
     <h1 v-bind:style="{ color: colors[0].hex}">{{ initialColors[randomValue].title }}</h1>
     <div class="group">
       <progress :value="time" max="2800"></progress>
@@ -48,7 +48,7 @@ export default {
         { title: 'Blue', hex: 'blue' },
         { title: 'Green', hex: 'green' },
         { title: 'Grey', hex: 'grey' },
-        { title: 'Yellow', hex: 'yellow' },
+        { title: 'Yellow', hex: 'darkyellow' },
         { title: 'Orange', hex: 'orange' }
       ]
     }

@@ -66,6 +66,7 @@ h2 {
 
 .group {
   display: block;
+  text-align: center;
 }
 
 .button {
@@ -107,12 +108,29 @@ h2 {
   opacity: 0;
 }
 
-@media only screen and (min-device-width: 0px) and (max-device-width: 480px) {
+@media (max-width: 480px) {
   /* Styles */
   button,
   progress {
     width: 80% !important;
     min-width: 80% !important;
+  }
+  .group {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Styles */
+  button,
+  progress {
+    width: 432px !important;
+    min-width: 432px !important;
+  }
+  .group {
+    width: 50%;
+    margin: 0 auto;
   }
 }
 </style>

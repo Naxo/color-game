@@ -1,5 +1,5 @@
 <template>
-  <div class="color-game-page ">
+  <div class="color-game-page">
     <transition name="fade">
       <game-step></game-step>
     </transition>
